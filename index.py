@@ -95,10 +95,8 @@ def upload_image(image_data):
     }
     response = requests.post(url, data=payload, files=files)
     
-    # Log the response for debugging
     print("Upload Response:", response.json())
     
-    # Check if 'data' is in the response
     if 'data' in response.json():
         return response.json()['data']['url']
     else:

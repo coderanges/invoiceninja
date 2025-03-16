@@ -6,7 +6,7 @@ import dotenv
 
 dotenv.load_dotenv()
 
-# Configure Cassandra connection
+# Configure Cassandra Connections
 CASSANDRA_HOSTS = os.environ.get('CASSANDRA_HOSTS', '127.0.0.1').split(',')
 KEYSPACE = os.environ.get('CASSANDRA_KEYSPACE', 'invoice_generator')
 
@@ -23,7 +23,7 @@ cluster = Cluster(
 session = cluster.connect(KEYSPACE)
 session.row_factory = dict_factory
 
-# Create tables
+# Create Tables
 session.execute(f"""
     CREATE TABLE IF NOT EXISTS {KEYSPACE}.invoices (
         invoice_id text PRIMARY KEY,
@@ -46,7 +46,7 @@ session.execute(f"""
     )
 """)
 
-# Database operations
+# Database Operations
 def add_invoice(data):
     query = """
         INSERT INTO invoices (
