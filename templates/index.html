@@ -1,0 +1,258 @@
+{% extends 'base.html' %}
+{% block body %}
+<header class="d-flex justify-content-center m-5">
+    <h1>Invoice Ninja 🧾</h1>
+</header>
+<form action="/invoice" method="post" enctype="multipart/form-data" class="d-flex flex-column align-items-center"">
+    <small class=" float-start"><span style="color: red;">*</span> marked fields are required to be filled.</small>
+    <div class=" container m-3">
+        <div class="card">
+            <h5 class="card-header">Invoice Details</h5>
+            <div class="card-body">
+                <label class="form-label">Invoice File Name <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" placeholder="File Name" aria-label="File aNme" name="filename"
+                    value="{{ invoice_id }}.pdf" readonly>
+                <label class="form-label mt-3">Invoice Type <span style="color: red;">*</span></label>
+                <select class="form-select" aria-label="Default select example" name="invoice_type" id="invoice_type">
+                    <option value="paid">Paid</option>
+                    <option value="unpaid" selected>Unpaid</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class=" container m-3">
+        <div class="card">
+            <h5 class="card-header">Invoice Details</h5>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Invoice ID <span style="color: red;">*</span></label>
+                    <input type="text" class="form-control" name="invoice_id" placeholder="Invoice id"
+                        value="{{ invoice_id }}" readonly>
+                    <div class="form-text">
+                        Auto generated with random number, you cannot edit this.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Invoice Date <span style="color: red;">*</span></label>
+                    <input type="date" class="form-control" name="invoice_date" placeholder="Another input placeholder"
+                        value="{{ date }}" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Invoice Due Date <span style="color: red;">*</span></label>
+                    <input type="date" class="form-control" name="invoice_due_date" id="invoice_due_date"
+                        placeholder="Another input placeholder" min="" required>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container m-3">
+        <div class="card">
+            <h5 class="card-header">Service Provider Details</h5>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <label class="form-label">Company name <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" placeholder="Company name" aria-label="Company name"
+                            name="sp_name" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label class="form-label mt-3">Company logo <span style="color: red;">*</span></label>
+                        <input type="file" class="form-control" placeholder="Company logo" aria-label="Company logo"
+                            name="sp_logo" accept="image/*" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container m-3">
+        <div class="card">
+            <h5 class="card-header">Customer Details</h5>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <label class="form-label">First Name <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" placeholder="First name" aria-label="First name"
+                            name="c_fname" required>
+                    </div>
+                    <div class="col">
+                        <label class="form-label">Last Name <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" placeholder="Last name" aria-label="Last name"
+                            name="c_lname" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label class="form-label mt-3">Street <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" placeholder="Street" aria-label="Street"
+                            name="c_street" required>
+                    </div>
+                    <div class="col">
+                        <label class="form-label mt-3">City <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" placeholder="City" aria-label="City" name="c_city" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label class="form-label mt-3">County <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" placeholder="County" aria-label="County" name="c_county" required>
+                    </div>
+                    <div class="col">
+                        <label class="form-label mt-3">Country <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" placeholder="Country" aria-label="Country"
+                            name="c_country" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label class="form-label mt-3">Postal Code <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" placeholder="Postal Code" aria-label="Postal code"
+                            name="c_postalcode" required>
+                    </div>
+                    <div class="col">
+                        <label class="form-label mt-3">Email <span style="color: red;">*</span></label>
+                        <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="c_email" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container m-3">
+        <div class="card">
+            <h5 class="card-header">Invoice Details</h5>
+            <div class="card-body">
+                <div class="mb-5">
+                    <label class="form-label">Tax Percentage <span style="color: red;">*</span></label>
+                    <input type="number" class="form-control" name="tax_percentage" placeholder="Tax percentage"
+                        value="16" required>
+                    <div class="form-text">
+                        Default is 16 %, you may edit if you want to.
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-hover" id="tab_logic">
+                            <input type="hidden" name="item_nos" id="item_nos" value="1">
+                            <col width="40%">
+                            <col width="20%">
+                            <col width="20%">
+                            <thead>
+                                <tr>
+                                    <th class="text-center"> Item Name </th>
+                                    <th class="text-center"> Units </th>
+                                    <th class="text-center"> Unit Price </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="addr0">
+                                    <td>
+                                        <input type="text" name='item_name[]' placeholder='Item Name'
+                                            class="form-control" required />
+                                    </td>
+                                    <td>
+                                        <input type="number" name='item_unit[]' placeholder='Units'
+                                            class="form-control desc" id='item_unit' required />
+                                    </td>
+                                    <td>
+                                        <input type="number" name='item_unitprice[]' placeholder='Unit Price'
+                                            class="form-control cat" id="item_unitprice" required />
+                                    </td>
+                                </tr>
+                                <tr id="addr1"></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row clearfix float-start">
+                    <div class="col-md-12">
+                        <button type="button" id="add_row" class="btn btn-primary">Add Row</button>
+                        <button type="button" id='delete_row' class="btn btn-danger">Delete Row</button>
+                    </div>
+                </div>
+                <!-- <div class="row clearfix float-end" style="margin-top:20px">
+                    <div class="pull-right col-md-12">
+                        <table class="table table-bordered table-hover" id="tab_logic_total">
+                            <tbody>
+                                <tr>
+                                    <th class="text-center">Sub Total</th>
+                                    <td class="text-center"><input type="number" name='sub_total' placeholder='0.00'
+                                            class="form-control" id="sub_total" readonly /></td>
+                                </tr>
+                                <tr>
+                                    <th class="text-center">Tax</th>
+                                    <td class="text-center"><input type="number" name='advance_amount'
+                                            id="advance_amount" placeholder='0.00' class="form-control" /></td>
+                                </tr>
+                                <tr>
+                                    <th class="text-center">Grand Total</th>
+                                    <td class="text-center"><input type="number" name='total_amount'
+                                            id="total_amount" placeholder='0.00' class="form-control" readonly />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <div class="container m-3" id="transaction" style="display: none;">
+        <div class="card">
+            <h5 class="card-header">Transcation Details</h5>
+            <div class="card-body">
+                <div class="form-text text-danger">
+                    This section is only available if the invoice is paid.
+                </div>
+                <div class="mb-3">
+                    <label class="form-label mt-3">Mode Of Payment <span style="color: red;">*</span></label>
+                    <select class="form-select" aria-label="Select transaction done through" name="paid_through" id="trans_select">
+                        <option value="Cash" selected>Cash</option>
+                        <option value="Paypal">Paypal</option>
+                        <option value="Debit Card">Debit Card</option>
+                        <option value="Credit Card">Credit Card</option>
+                        <option value="UPI">UPI</option>
+                        <option value="Net Banking">Net Banking</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <div class="form-text">
+                        Select the method through which the payment was done.
+                    </div>
+                </div>
+                <div class="mb-3"  style="display: none;" id="paid_through_other">
+                    <label class="form-label">Please specify <span style="color: red;">*</span></label>
+                    <input type="text" class="form-control"  placeholder="Mode of payment" name="paid_through_other">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container m-3">
+        <div class="card">
+            <h5 class="card-header">Footer Text</h5>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Text</label>
+                    <div class="form-text mb-3">
+                        Give a descriptive text to be placed at the bottom of the invoice.
+                    </div>
+                    <textarea name='footer'
+                        placeholder="Email: example@example.com<br />Don't hesitate to contact us for any questions."
+                        class="form-control desc" /></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container m-5 d-flex justify-content-center">
+        <button type="submit" class="btn btn-success">Generate Invoice</button>
+    </div>
+</form>
+<footer class="text-center text-white" style="background-color: #f1f1f1;">
+    <!-- Copyright -->
+    <div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        <a class="text-dark" href="https://github.com/coderanges/invoiceninja.git" style="text-decoration: none;">
+            ©2025 coderanges Copyright: Invoice Ninja
+        </a>
+    </div>
+    <!-- Copyright -->
+</footer>
+{% endblock %}
