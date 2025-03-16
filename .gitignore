@@ -1,5 +1,16 @@
 .env
-.DS_Store
+.venv
+env/
 venv/
+.DS_Store
 __pycache__/
 *.pyc
+*.py[cod]
+*$py.class
+*.log
+/var/lib/cassandra/
+*.db
+build/
+dist/
+instance/
+.vscode/
